@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="/style/home.css">
+</head>
+<body>
+<section class="hero">
+    <header class="header">
+        <ul class="menu" th:if="${user.getStatus() eq 'NONE'}">
+            <li><a th:href="@{/app/workerIn}">
+                IN / Worker
+            </a></li>
+            <li><a th:href="@{/app/workerUp}">
+                UP / Worker
+            </a></li>
+            <li><a th:href="@{/app/adminIn}">
+                Administrator
+            </a></li>
+            <li><a th:href="@{/app/clientIn}">
+                IN / Client
+            </a></li>
+            <li><a th:href="@{/app/clientUp}">
+                UP / Client
+            </a></li>
+        </ul>
+        <ul class="menu" th:if="${user.getStatus ne 'NONE'}" th:switch="${user.getStatus()}">
+            <li><a th:case="'WORKER'" th:href="@{/app/worker}" th:text="${user.getLogin()}">Profile</a></li>
+            <li><a th:case="'CLIENT'" th:href="@{/app/client}" th:text="${user.getLogin()}">Profile</a></li>
+            <li><a th:case="'ADMIN'" th:href="@{/app/admin}">Administrator</a></li>
+            <li><a th:href="@{/app/out}">Out</a></li>
+        </ul>
+    </header>
+    <main class="main">
+        <h1 th:if="${user.getIsIn() ne true}">Welcome to department management system.</h1>
+        <h2 th:if="${user.getIsIn() ne true}">Please authorize to get access to data.</h2>
+        <div class="data" th:if="${user.getIsIn()}">
+            <p th:text="${user.getStatus()}">Status</p>
+            <p th:text="${user.getLogin()}">Login</p>
+        </div>
+        <div class="switch" th:switch="${user.getStatus()}">
+            <a th:case="'WORKER'" th:href="@{/app/worker}">Profile</a>
+            <a th:case="'CLIENT'" th:href="@{/app/client}">Profile</a>
+            <a th:case="'ADMIN'" th:href="@{/app/admin}">Profile</a>
+            <p th:case="'NONE'">You always can join us by signing up!</p>
+        </div>
+    </main>
+</section>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${worker.getLogin()}">Title</title>
+  <link rel="stylesheet" href="/style/clients.css">
+</head>
+<body>
+<section class="hero">
+  <header class="header">
+    <ul class="menu">
+      <li><a th:href="@{/app/home}">Home</a></li>
+      <li><a th:href="@{/app/worker}" th:text="${worker.getLogin()}"></a></li>
+      <li><a th:href="@{/app/out}">Out</a></li>
+    </ul>
+  </header>
+  <main class="main">
+    <div class="info">
+      <p th:text="'Login: ' + ${worker.getLogin()}"></p>
+      <p th:text="'Password: ' + ${worker.getPassword()}"></p>
+      <p th:text="'Name: ' + ${worker.getName()}"></p>
+      <p th:text="'Salary: ' + ${worker.getSalary()}"></p>
+      <p th:text="'Specialty: ' + ${worker.getSpecialty()}"></p>
+      <p th:text="'Department: ' + ${worker.getDepartment()}"></p>
+    </div>
+    <form th:action="@{/app/createTask}" th:method="POST" th:object="${task}">
+      <h1>Make a task</h1>
+      <input type="text" th:field="*{task}" placeholder="Enter task...">
+      <br>
+      <input type="text" th:field="*{worker}" placeholder="Enter your login...">
+      <br>
+      <input type="submit" value="Send!">
+    </form>
+    <form th:action="@{/app/deleteTasks}" th:method="DELETE" th:object="${worker}">
+      <h1>Delete tasks</h1>
+      <input type="text" th:field="*{login}" placeholder="Enter login...">
+      <input type="submit" value="Delete tasks...">
+    </form>
+    <form th:action="@{/app/workerE}" th:method="PATCH" th:object="${worker}" class="forrrm">
+      <h1>Edit</h1>
+      <input type="text" th:field="*{login}" placeholder="Enter login..." readonly>
+      <br>
+      <input type="password" th:field="*{password}" placeholder="Enter password...">
+      <br>
+      <input type="text" th:field="*{department}" placeholder="Enter department to join..." readonly>
+      <br>
+      <input type="text" th:field="*{name}" placeholder="Enter name...">
+      <br>
+      <input type="text" th:field="*{salary}" placeholder="Enter salary..." readonly>
+      <br>
+      <input type="text" th:field="*{specialty}" placeholder="Enter specialty...">
+      <br>
+      <input type="submit" value="Edit!">
+    </form>
+    <div class="operations" th:if="${tasks.size() > 0}" th:each="t : ${tasks}">
+      <div class="wrap">
+        <p th:text="'Task: ' + ${t.getTask()}"></p>
+        <p th:text="'Worker: ' + ${t.getWorker()}"></p>
+      </div>
+    </div>
+  </main>
+</section>
+</body>
+</html>

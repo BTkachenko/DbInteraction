@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+    <link rel="stylesheet" href="/style/clients.css">
+</head>
+<body>
+<section class="hero">
+    <header class="header">
+        <ul class="menu">
+            <li><a th:href="@{/app/home}">Home</a></li>
+            <li><a th:href="@{/app/admin}">Admin House</a></li>
+            <li><a th:href="@{/app/out}">Out</a></li>
+        </ul>
+    </header>
+    <main class="main">
+        <form th:action="@{/app/createDep}" th:method="POST" th:object="${department}">
+            <h1>Create department</h1>
+            <input type="text" th:field="*{name}" placeholder="Enter name for department...">
+            <br>
+            <input type="text" th:field="*{workers}" th:value="0" hidden>
+            <input type="submit" value="Send!">
+        </form>
+        <div class="departments" th:if="${departments.size() > 0}" th:each="d : ${departments}">
+            <div class="wrap">
+                <p th:text="'Name: ' + ${d.getName()}"></p>
+                <p th:text="'Workers: ' + ${d.getWorkers()}"></p>
+            </div>
+        </div>
+    </main>
+</section>
+</body>
+</html>

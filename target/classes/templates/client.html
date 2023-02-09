@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${client.getLogin()}">Title</title>
+    <link rel="stylesheet" href="/style/clients.css">
+</head>
+<body>
+<section class="hero">
+    <header class="header">
+        <ul class="menu">
+            <li><a th:href="@{/app/home}">Home</a></li>
+            <li><a th:href="@{/app/client}" th:text="${client.getLogin()}"></a></li>
+            <li><a th:href="@{/app/out}">Out</a></li>
+        </ul>
+    </header>
+    <main class="main">
+        <div class="info">
+            <p th:text="'Login: ' + ${client.getLogin()}"></p>
+            <p th:text="'Password: ' + ${client.getPassword()}"></p>
+            <p th:text="'Your balance: ' + ${client.getBalance()}"></p>
+        </div>
+        <form th:action="@{/app/createOp}" th:method="POST" th:object="${operation}">
+            <h1>Make order</h1>
+            <input type="text" th:field="*{type}" placeholder="Enter type of service...">
+            <br>
+            <input type="text" th:field="*{cost}" placeholder="Enter cost in numbers...">
+            <br>
+            <input type="text" th:field="*{client}" placeholder="Enter your login...">
+            <input type="submit" value="Send!">
+        </form>
+        <form th:action="@{/app/deleteOp}" th:method="DELETE" th:object="${operation}">
+            <h1>Delete orders</h1>
+            <input type="text" th:field="*{client}" placeholder="Enter your login...">
+            <input type="submit" value="Delete!">
+        </form>
+        <form th:action="@{/app/clientE}" th:method="PATCH" th:object="${client}">
+            <h1>Edit data</h1>
+            <input type="text" th:field="*{login}" placeholder="Enter login..." readonly>
+            <br>
+            <input type="password" th:field="*{password}"  placeholder="Enter password...">
+            <br>
+            <input type="text" th:field="*{balance}" placeholder="Enter balance..." readonly>
+            <br>
+            <input type="submit" value="Edit!">
+        </form>
+        <div class="operations" th:if="${operations.size() > 0}" th:each="o : ${operations}">
+            <div class="wrap">
+                <p th:text="'Type: ' + ${o.getType()}"></p>
+                <p th:text="'Cost: ' + ${o.getCost()}"></p>
+                <p th:text="'Client: ' + ${o.getClient()}"></p>
+            </div>
+        </div>
+    </main>
+</section>
+</body>
+</html>

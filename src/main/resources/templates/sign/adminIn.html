@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Authorization</title>
+  <link rel="stylesheet" href="/style/clients.css">
+</head>
+<body>
+<section class="hero">
+  <header class="header">
+    <ul class="menu">
+      <li><a th:href="@{/app/home}">Home</a></li>
+    </ul>
+  </header>
+  <main class="main">
+    <form th:action="@{/app/aIn}" th:method="POST" th:object="${admin}">
+      <h1>Sign In</h1>
+      <input type="text" th:field="*{login}" placeholder="Enter login...">
+      <br>
+      <input type="text" th:field="*{password}" placeholder="Enter password...">
+      <br>
+      <input type="submit" value="Sign!">
+    </form>
+  </main>
+</section>
+</body>
+</html>

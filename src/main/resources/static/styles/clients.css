@@ -1,0 +1,137 @@
+*
+{
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    scroll-behavior: smooth;
+}
+::-webkit-scrollbar
+{
+    display: none;
+}
+ul
+{
+    list-style: none;
+}
+li
+{
+    display: inline;
+}
+a , a:active , a:visited
+{
+    text-decoration: none;
+}
+.hero
+{
+    width: 100vw;
+    min-height: 100vh;
+    height: fit-content;
+    background: black;
+    display: grid;
+    grid-template-areas: 'header'
+    'content';
+    grid-template-rows: 10% 90%;
+    grid-auto-columns: 100%;
+}
+.hero > .header
+{
+    grid-area: header;
+    width:100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.hero > .header > .menu
+{
+    width: 80%;
+    height: 100%;
+    border-bottom: 3px solid white;
+    padding: 5px 0;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+.menu > li > a
+{
+    color: white;
+    text-transform: uppercase;
+    font-size: 1.2em;
+    letter-spacing: 2px;
+    transition: all 0.3s ease-in-out;
+}
+.menu > li > a:hover
+{
+    color: crimson;
+}
+.main
+{
+    grid-area: content;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    align-items: center;
+    min-height: fit-content;
+    padding: 20px 0;
+    height: 100vh;
+}
+.main > *
+{
+    color: white;
+    font-size: 1.1em;
+}
+.info
+{
+    width: 100%;
+    height: fit-content;
+    margin: 10px;
+}
+.info > p
+{
+    width: 100%;
+}
+form
+{
+    width: 400px;
+    height: 300px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    align-items: center;
+    color: white;
+}
+form > input , form > h1
+{
+    width: 90%;
+    outline: none;
+}
+.operations
+{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+.wrap
+{
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+.wrap > p
+{
+    width: 100%;
+    color: white;
+}
+.forrrm
+{
+    height: fit-content;
+    width: fit-content;
+}

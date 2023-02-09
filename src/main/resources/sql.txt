@@ -1,0 +1,55 @@
+create table logs(login varchar,date timestamp without time zone)
+create table department(name varchar unique,workers int)
+create table client(login varchar unique,password varchar,balance int)
+create table operations(type varchar,cost int,client varchar references client(login))
+create table tasks(worker varchar references worker(login),task varchar)
+create table worker(department varchar references department(name) ,name varchar,
+salary int,specialty varchar,login varchar unique,password varchar)
+
+
+CREATE FUNCTION clear_worker(dep varchar , log varchar) RETURNS void AS '
+    UPDATE department SET workers=workers - 1 WHERE name=dep;
+    DELETE FROM tasks WHERE worker=log;
+' LANGUAGE SQL;
+
+CREATE FUNCTION clear_client(cl varchar) RETURNS void AS '
+    DELETE FROM operations WHERE client=cl;
+' LANGUAGE SQL;
+
+CREATE OR REPLACE FUNCTION add_to_log() RETURNS TRIGGER AS $$
+DECLARE
+    mstr varchar(30);
+    astr varchar(100);
+    retstr varchar(254);
+BEGIN
+    IF    TG_OP = 'INSERT' THEN
+        astr = NEW.login;
+        mstr := 'Add new user ';
+        retstr := mstr || astr;
+        INSERT INTO logs(login,date) values (retstr,NOW());
+        RETURN NEW;
+    ELSIF TG_OP = 'UPDATE' THEN
+        astr = NEW.login;
+        mstr := 'Update user ';
+        retstr := mstr || astr;
+        INSERT INTO logs(login,date) values (retstr,NOW());
+        RETURN NEW;
+    ELSIF TG_OP = 'DELETE' THEN
+        astr = OLD.login;
+        mstr := 'Remove user ';
+        retstr := mstr || astr;
+        INSERT INTO logs(login,date) values (retstr,NOW());
+        RETURN OLD;
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER t_user
+    AFTER INSERT OR UPDATE OR DELETE ON client FOR EACH ROW EXECUTE PROCEDURE add_to_log ();
+
+CREATE TRIGGER t_worker
+    AFTER INSERT OR UPDATE OR DELETE ON worker FOR EACH ROW EXECUTE PROCEDURE add_to_log ();
+
+ADMIN DATA:
+Login: ADMIN
+Password: ADMIN
